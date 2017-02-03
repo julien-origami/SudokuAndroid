@@ -1,10 +1,10 @@
 package julien_origami.sudoku;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 public class LevelChoice extends AppCompatActivity {
@@ -24,7 +24,5 @@ public class LevelChoice extends AppCompatActivity {
 
         ListView levelList = (ListView) findViewById(R.id.levelList);
         levelList.setAdapter(bddManager.getCorrectObject(infoPasse));
-
-        //bddManager.getCorrectObject(infoPasse);
     }
 }

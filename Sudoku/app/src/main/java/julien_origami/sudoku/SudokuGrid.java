@@ -9,11 +9,13 @@ public class SudokuGrid {
     private int level;
     private int num;
     private int done;
+    private String grid;
 
-    public SudokuGrid(int level, int num, int done){
+    public SudokuGrid(int level, int num, int done, String grid){
         this.level = level;
         this.num = num;
         this.done = done;
+        this.grid = grid;
     }
 
     public int getDone(){
@@ -26,6 +28,10 @@ public class SudokuGrid {
 
     public int getLevel(){
         return level;
+    }
+
+    public String getGrid(){
+        return grid;
     }
 
     public String toString(){

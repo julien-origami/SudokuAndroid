@@ -1,10 +1,8 @@
 package julien_origami.sudoku;
 
 import android.app.Activity;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by julienpons on 03/02/2017.
@@ -12,9 +10,9 @@ import java.util.List;
 
 public class BddManager {
 
-    private Activity levelActivity;
+    private LevelChoice levelActivity;
 
-    public BddManager(Activity levelActivity){
+    public BddManager(LevelChoice levelActivity){
         this.levelActivity = levelActivity;
     }
 
@@ -35,11 +33,13 @@ public class BddManager {
             case "Niveau Difficile":
                 categories = this.getStringList(3);
                 break;
+
+            default:
+                categories = this.getStringList(1);
+                break;
         }
 
-        //ArrayAdapter<SudokuGrid> dataAdapter = new ArrayAdapter(this.levelActivity, android.R.layout.simple_spinner_item, (ArrayList<SudokuGrid>) categories);
         MonAdapteur dataAdapter = new MonAdapteur(this.levelActivity, categories);
-        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return dataAdapter;
     }
 
@@ -47,7 +47,7 @@ public class BddManager {
     public ArrayList<SudokuGrid> getStringList(int bddInfo){
         ArrayList<SudokuGrid> categories = new ArrayList();
         for(int i=0;i<100;i++){
-            categories.add(new SudokuGrid(bddInfo,i,30));
+            categories.add(new SudokuGrid(bddInfo,i,30,bddInfo+" "+i));
         }
         return categories;
     }
