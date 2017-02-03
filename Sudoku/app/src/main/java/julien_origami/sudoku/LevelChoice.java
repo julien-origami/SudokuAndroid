@@ -2,6 +2,8 @@ package julien_origami.sudoku;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class LevelChoice extends AppCompatActivity {
 
@@ -9,5 +11,11 @@ public class LevelChoice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_choice);
+
+        TextView textchampsaisie = (TextView) findViewById(R.id.textView3);
+        Bundle objetbunble = this.getIntent().getExtras();
+
+        String InfoPasse = objetbunble.getBundle("passInfo").getString("firstString");
+        textchampsaisie.setText(InfoPasse);
     }
 }
