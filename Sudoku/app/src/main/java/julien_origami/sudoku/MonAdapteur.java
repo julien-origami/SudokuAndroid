@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class MonAdapteur extends BaseAdapter {
 
-    private ArrayList<String> items;
+    private ArrayList<SudokuGrid> items;
     private Context context;
 
 
-    public MonAdapteur(Context context, ArrayList<String> items) {
+    public MonAdapteur(Context context, ArrayList<SudokuGrid> items) {
         this.context = context;
         this.items = items;
     }
@@ -59,22 +59,18 @@ public class MonAdapteur extends BaseAdapter {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
 
-        /*text1.setText(items.get(position).num + "   niveau:" + (double) items.get(position).level);
-        text2.setText(items.get(position).done+" %");
+        text1.setText(items.get(position).getNum() + "   niveau:" + (double) items.get(position).getLevel());
+        text2.setText(items.get(position).getDone()+" %");
         text2.setTextSize(22);
-        if (items.get(position).done < 40) {
+        if (items.get(position).getDone() < 40) {
             text2.setTextColor(Color.RED);
         }
         else
             text2.setTextColor(Color.GREEN);
-*/
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Munro.ttf");
-        text2.setTypeface(typeface);
+
+        //Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Munro.ttf");
+        //text2.setTypeface(typeface);
 
         return twoLineListItem;
-
-
-
-
     }
 }
