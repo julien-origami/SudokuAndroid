@@ -23,10 +23,10 @@ import java.util.ArrayList;
 public class MonAdapteur extends BaseAdapter {
 
     private ArrayList<SudokuGrid> items;
-    private LevelChoice context;
+    private Context context;
 
 
-    public MonAdapteur(LevelChoice context, ArrayList<SudokuGrid> items) {
+    public MonAdapteur(Context context, ArrayList<SudokuGrid> items) {
         this.context = context;
         this.items = items;
     }

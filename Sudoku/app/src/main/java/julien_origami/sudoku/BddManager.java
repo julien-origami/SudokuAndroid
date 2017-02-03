@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class BddManager {
 
-    private LevelChoice levelActivity;
+    private Activity levelActivity;
 
-    public BddManager(LevelChoice levelActivity){
+    public BddManager(Activity levelActivity){
         this.levelActivity = levelActivity;
     }
 
