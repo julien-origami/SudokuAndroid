@@ -1,1 +1,1 @@
-# SudokuAndroid
+# Sudoku Android
