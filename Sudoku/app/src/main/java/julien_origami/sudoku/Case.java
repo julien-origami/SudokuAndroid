@@ -10,13 +10,13 @@ import android.graphics.Paint;
 
 public class Case {
 
-    private float x;
-    private float y;
-    private Paint paint;
-    private int gridCote;
-    private int numCase;
-    private boolean canReceiveNumber;
-    private int numberColor;
+    protected float x;
+    protected float y;
+    protected Paint paint;
+    protected int gridCote;
+    protected int numCase;
+    protected boolean canReceiveNumber;
+    protected int numberColor;
 
     public Case(float x, float y, int gridCote, int numCase){
         this.y = y;

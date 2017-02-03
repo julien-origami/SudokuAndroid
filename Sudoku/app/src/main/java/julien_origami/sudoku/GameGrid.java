@@ -14,8 +14,9 @@ public class GameGrid extends AppCompatActivity {
         TextView textchampsaisie = (TextView) findViewById(R.id.textView4);
         Bundle objetbunble = this.getIntent().getExtras();
 
-        String infoPasse = objetbunble.getBundle("passInfo").getString("itemGrid");
-        textchampsaisie.setText(infoPasse);
-
+        String infoGrid = objetbunble.getBundle("passInfo").getString("itemGrid");
+        GridView gridView = (GridView) findViewById(R.id.dessin);
+        gridView.setInfoGrid(infoGrid);
+        //textchampsaisie.setText(infoPasse);
     }
 }

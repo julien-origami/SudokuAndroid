@@ -82,6 +82,9 @@ public class MonAdapteur extends BaseAdapter {
             public void onClick(View v) {
                 Bundle bun = new Bundle();
                 bun.putString("itemGrid",items.get(position).getGrid());
+                bun.putString("itemLevel",items.get(position).getLevel()+"");
+                bun.putString("itemNum",items.get(position).getNum()+"");
+                bun.putString("itemDone",items.get(position).getDone()+"");
                 Intent defineIntent = new Intent(context, GameGrid.class);
                 defineIntent.putExtra("passInfo", bun);
                 context.startActivity(defineIntent);

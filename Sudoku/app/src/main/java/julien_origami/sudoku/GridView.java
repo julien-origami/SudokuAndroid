@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +18,8 @@ import java.util.LinkedList;
 public class GridView extends View implements View.OnTouchListener{
 
     LinkedList<Case> cases;
+    String infoGrid;
+    int rectCote;
 
     public GridView(Context context, AttributeSet attrs){
         super(context,attrs);
@@ -28,7 +31,7 @@ public class GridView extends View implements View.OnTouchListener{
     public void onDraw(Canvas canvas){
 
         //for(int i=0;i<){
-        int rectCote = this.getWidth()/9;
+        rectCote = this.getWidth()/9;
 
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
@@ -42,7 +45,8 @@ public class GridView extends View implements View.OnTouchListener{
         int posY = 0;
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++) {
-                Case newCase = new Case(posX, posY, rectCote, i);
+
+                Case newCase = new Case(posX, posY, rectCote, getCurrentInt(infoGrid, i, j));
                 cases.add(newCase);
                 newCase.draw(canvas);
                 posX+=rectCote;
@@ -60,6 +64,12 @@ public class GridView extends View implements View.OnTouchListener{
     public boolean onTouch(View v, MotionEvent event) {
         int x = (int)event.getX();
         int y = (int)event.getY();
+
+        Log.d("x click",(x)+"");
+        Log.d("x onClick num",((x/rectCote)+1)+"");
+        Log.d("y click",(y)+"");
+        Log.d("y onClick num",((y/rectCote)+1)+"");
+        Log.d("Case onClick num",cases.get(9*(y/rectCote)+(x/rectCote)).getNumCase()+"");
         /*switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 cases.add(new NumPos(x,y,1));
@@ -72,5 +82,13 @@ public class GridView extends View implements View.OnTouchListener{
         }
         this.invalidate();*/
         return true;
+    }
+
+    public void setInfoGrid(String infoGrid){
+        this.infoGrid = infoGrid;
+    }
+
+    public int getCurrentInt(String string, int i, int j){
+        return Character.digit(string.charAt(9*i+j), 10);
     }
 }

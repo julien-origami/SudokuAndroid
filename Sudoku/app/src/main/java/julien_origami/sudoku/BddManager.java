@@ -47,7 +47,7 @@ public class BddManager {
     public ArrayList<SudokuGrid> getStringList(int bddInfo){
         ArrayList<SudokuGrid> categories = new ArrayList();
         for(int i=0;i<100;i++){
-            categories.add(new SudokuGrid(bddInfo,i,30,bddInfo+" "+i));
+            categories.add(new SudokuGrid(bddInfo,i,30,"008203500009670408346050702430010059967005001000496203280034067703500904004107020"));
         }
         return categories;
     }
