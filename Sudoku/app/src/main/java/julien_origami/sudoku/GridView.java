@@ -18,13 +18,17 @@ import java.util.LinkedList;
 public class GridView extends View implements View.OnTouchListener{
 
     LinkedList<Case> cases;
+    LinkedList<MouvCase> clickCases;
     String infoGrid;
     int rectCote;
+    boolean firstDraw;
 
     public GridView(Context context, AttributeSet attrs){
         super(context,attrs);
         cases = new LinkedList<Case>();
+        clickCases = new LinkedList<MouvCase>();
         this.setOnTouchListener(this);
+        firstDraw = true;
     }
 
     @Override
@@ -41,23 +45,41 @@ public class GridView extends View implements View.OnTouchListener{
         canvas.drawLine(0,rectCote*3,rectCote*9,rectCote*3,paint);
         canvas.drawLine(0,rectCote*6,rectCote*9,rectCote*6,paint);
 
-        int posX = 0;
-        int posY = 0;
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++) {
 
-                Case newCase = new Case(posX, posY, rectCote, getCurrentInt(infoGrid, i, j));
-                cases.add(newCase);
+        if(firstDraw){
+            firstDraw = false;
+            int posX = 0;
+            int posY = 0;
+
+            for(int i=0;i<9;i++){
+                for(int j=0;j<9;j++) {
+                    Case newCase = new Case(posX, posY, rectCote, getCurrentInt(infoGrid, i, j));
+                    cases.add(newCase);
+                    newCase.draw(canvas);
+                    posX+=rectCote;
+                }
+                posX = 0;
+                posY+=rectCote;
+            }
+            for(int i=1;i<10;i++){
+                MouvCase newCase = new MouvCase(posX, 10*rectCote, rectCote, i);
                 newCase.draw(canvas);
+                clickCases.add(newCase);
                 posX+=rectCote;
             }
-            posX = 0;
-            posY+=rectCote;
+        }else{
+            for(int i=0;i<9;i++){
+                for(int j=0;j<9;j++) {
+                    Case newCase = getOneCase(9*i+j);
+                    newCase.draw(canvas);
+                }
+            }
+            for(int i=1;i<10;i++){
+                MouvCase newCase = getOneMouvCase(i-1);
+                newCase.draw(canvas);
+            }
         }
-        //}
-        /*for (NumPos cercle : cercles){
-            cercle.draw(canvas);
-        }*/
+
     }
 
     @Override
@@ -65,30 +87,37 @@ public class GridView extends View implements View.OnTouchListener{
         int x = (int)event.getX();
         int y = (int)event.getY();
 
-        Log.d("x click",(x)+"");
-        Log.d("x onClick num",((x/rectCote)+1)+"");
-        Log.d("y click",(y)+"");
-        Log.d("y onClick num",((y/rectCote)+1)+"");
-        Log.d("Case onClick num",cases.get(9*(y/rectCote)+(x/rectCote)).getNumCase()+"");
-        /*switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                cases.add(new NumPos(x,y,1));
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                Case cercle = cases.getLast();
-                //cercle. = (int)Math.sqrt((x-cercle.xc)*(x-cercle.xc) + (y-cercle.yc)*(y-cercle.yc));
-                break;
-        }
-        this.invalidate();*/
         return true;
+    }
+
+    public Case getOneCase(int id){
+        return cases.get(id);
+    }
+
+    public MouvCase getOneMouvCase(int id){
+        return clickCases.get(id);
     }
 
     public void setInfoGrid(String infoGrid){
         this.infoGrid = infoGrid;
     }
 
+    public int getRectCote(){
+        return this.rectCote;
+    }
+
     public int getCurrentInt(String string, int i, int j){
         return Character.digit(string.charAt(9*i+j), 10);
+    }
+
+    public void modifyBgColorCaseSelected(int selectedMouvCase){
+        for(int i = 0; i<clickCases.size(); i++){
+            if(i==selectedMouvCase){
+                clickCases.get(i).setNewBackGround();
+            }else{
+                clickCases.get(i).resetBackGround();
+            }
+        }
+
     }
 }

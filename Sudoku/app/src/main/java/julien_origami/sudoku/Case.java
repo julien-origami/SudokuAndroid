@@ -3,6 +3,7 @@ package julien_origami.sudoku;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * Created by julienpons on 03/02/2017.
@@ -45,9 +46,11 @@ public class Case {
 
     public void drawNumber(Canvas canvas, int numToDraw){
         if(numToDraw>0){
+            paint.setStyle(Paint.Style.FILL);
             paint.setColor(numberColor);
             paint.setTextSize(gridCote/2);
             canvas.drawText(numToDraw+"",x+(gridCote/5)*2,y+(gridCote/5)*4,paint);
+
         }
     }
 
@@ -60,7 +63,6 @@ public class Case {
     public boolean setNumCase(int numCase){
         if (canReceiveNumber){
             this.numCase = numCase;
-            /*Redraw*/
             return canReceiveNumber;
         }else {
             return canReceiveNumber;
