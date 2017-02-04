@@ -2,6 +2,10 @@ package julien_origami.sudoku;
 
 import android.app.Activity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -12,30 +16,30 @@ public class BddManager {
 
     private Activity levelActivity;
 
-    public BddManager(Activity levelActivity){
+    public BddManager(Activity levelActivity) {
         this.levelActivity = levelActivity;
     }
 
-    public MonAdapteur getCorrectObject(String idOfObject){
+    public MonAdapteur getCorrectObject(String idOfObject) {
 
         ArrayList<SudokuGrid> categories = new ArrayList();
 
-        switch (idOfObject){
+        switch (idOfObject) {
 
             case "Niveau Facile":
-                categories = this.getStringList(1);
+                categories = this.getStringList(1, R.raw.level_0);
                 break;
 
             case "Niveau Moyen":
-                categories = this.getStringList(2);
+                categories = this.getStringList(2, R.raw.level_1);
                 break;
 
             case "Niveau Difficile":
-                categories = this.getStringList(3);
+                categories = this.getStringList(3, R.raw.level_2);
                 break;
 
             default:
-                categories = this.getStringList(1);
+                categories = this.getStringList(1, R.raw.level_0);
                 break;
         }
 
@@ -44,11 +48,26 @@ public class BddManager {
     }
 
 
-    public ArrayList<SudokuGrid> getStringList(int bddInfo){
+    public ArrayList<SudokuGrid> getStringList(int bddInfo, int ressourceFile) {
+        InputStream is = levelActivity.getResources().openRawResource(ressourceFile);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        String str = new String();
+        String buf = str;
+
         ArrayList<SudokuGrid> categories = new ArrayList();
-        for(int i=0;i<100;i++){
-            categories.add(new SudokuGrid(bddInfo,i,30,"008203500009670408346050702430010059967005001000496203280034067703500904004107020"));
+        if (is != null) {
+            try {
+                int index = 0;
+                while ((str = reader.readLine()) != null) {
+                    categories.add(new SudokuGrid(bddInfo, index, 30, str));
+                    index++;
+                }
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return categories;
     }
+
 }
