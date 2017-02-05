@@ -47,8 +47,9 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if(y <= (9*gridView.rectCote)){
-                    if (checkIsPossible()){
-                        gridView.cases.get(9*(y/gridView.rectCote)+(x/gridView.rectCote)).setNumCase(selectedInt);
+                    int caseSelected = 9*(y/gridView.rectCote)+(x/gridView.rectCote);
+                    if (checkIsPossible(caseSelected, gridView)){
+                        gridView.cases.get(caseSelected).setNumCase(selectedInt);
                         gridView.modifyBgColorCaseSelected(-1);
                         selectedInt = 0;
                     }
@@ -66,7 +67,36 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
         return true;
     }
 
-    public boolean checkIsPossible(){
+    public boolean checkIsPossible(int caseSelected, GridView gridView){
+
+        for(int i = (caseSelected-caseSelected%9);i<(caseSelected-caseSelected%9)+9;i++){
+            if(i!=caseSelected && selectedInt > 0) {
+                Log.d("Case selected", i+"");
+                if (selectedInt == gridView.cases.get(i).getNumCase()){
+                    return false;
+                }
+            }
+        }
+
+        for(int i = ((caseSelected)%9);i<=((caseSelected)%9)+72;i+=9){
+            if(i!=caseSelected && selectedInt > 0) {
+                if (selectedInt == gridView.cases.get(i).getNumCase()){
+                    Log.d("false", i+"");
+                    return false;
+                }
+            }
+        }
+
+        //(caseSelected-(caseSelected)%9)/9
+
+        for(int i = ((caseSelected)%9);i<=((caseSelected)%9)+72;i+=9){
+            if(i!=caseSelected && selectedInt > 0) {
+                if (selectedInt == gridView.cases.get(i).getNumCase()){
+                    Log.d("false", i+"");
+                    return false;
+                }
+            }
+        }
 
         return true;
     }
