@@ -5,20 +5,41 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="10sp"
+    android:paddingLeft="10sp"
+    android:paddingRight="10sp"
+    android:paddingTop="10sp"
+    android:background="@color/colorPrimary"
     tools:context="julien_origami.sudoku.GameGrid">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="15sp"
+        android:paddingBottom="25sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="35sp"
         android:id="@+id/textView4"/>
 
-    <julien_origami.sudoku.GridView
-        android:id="@+id/dessin"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <julien_origami.sudoku.GridView
+            android:id="@+id/dessin"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:paddingTop="15sp"
+            android:paddingBottom="25sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="35sp"
+            android:id="@+id/textWin"/>
+    </RelativeLayout>
 
 </LinearLayout>

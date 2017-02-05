@@ -1,7 +1,6 @@
 package julien_origami.sudoku;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -31,19 +30,19 @@ public class BddManager{
         switch (idOfObject) {
 
             case "Niveau Facile":
-                categories = this.getStringList(1, R.raw.level_0);
+                categories = this.getStringList(1);
                 break;
 
             case "Niveau Moyen":
-                categories = this.getStringList(2, R.raw.level_1);
+                categories = this.getStringList(2);
                 break;
 
             case "Niveau Difficile":
-                categories = this.getStringList(3, R.raw.level_2);
+                categories = this.getStringList(3);
                 break;
 
             default:
-                categories = this.getStringList(0, R.raw.level_0);
+                categories = this.getStringList(0);
                 break;
         }
 
@@ -52,32 +51,7 @@ public class BddManager{
     }
 
 
-    public ArrayList<SudokuGrid> getStringList(int bddInfo, int ressourceFile) {
-        /*InputStream is = levelActivity.getResources().openRawResource(ressourceFile);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        String str = new String();
-        String buf = str;*/
-
-        //ArrayList<SudokuGrid> categories = databaseSudoku.getGridsByLevel(bddInfo);
-        /*if (is != null) {
-            try {
-                int index = 0;
-                while ((str = reader.readLine()) != null) {
-                    databaseSudoku.ajouter(new SudokuGrid((bddInfo*9+index)/*ID PROVISOIRE* /,bddInfo, index, 0, str));
-                    categories.add(new SudokuGrid((bddInfo*9+index)/*ID PROVISOIRE* /,bddInfo, index, 30, str));
-                    index++;
-                }
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-        /*for(int i=0;i<10;i++){
-            SudokuGrid sudokuGrid = new SudokuGrid((bddInfo*9+i)/*ID PROVISOIRE* /,bddInfo, i, 0, i+"08203500009670408346050702430010059967005001000496203280034067703500904004107020");
-            databaseSudoku.ajouter(sudokuGrid);
-            categories.add(sudokuGrid);
-        }*/
+    public ArrayList<SudokuGrid> getStringList(int bddInfo) {
         return databaseSudoku.getGridsByLevel(bddInfo);
     }
 
@@ -106,20 +80,17 @@ public class BddManager{
             String buf = str;
             String playerGrid = "000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
-            //ArrayList<SudokuGrid> categories = new ArrayList();
             if (is != null) {
                 try {
                     int index = 0;
                     while ((str = reader.readLine()) != null) {
                         if(index<=1000) {
-                            if(index%100==0){
+                            /*if(index%100==0){
                                 Log.d("show index Number", index+"");
-                                //counter.setText((x-1 * 1000 + index)+"");
-                            }
+                            }*/
                             SudokuGrid sudokuGrid = new SudokuGrid((x * 9 + index), x, index, 0, str);
                             sudokuGrid.setPlayerGrid(playerGrid);
                             databaseSudoku.ajouter(sudokuGrid);
-                            //categories.add(new SudokuGrid((x * 9 + index)/*ID PROVISOIRE*/, x, index, 30, str));
                         }
                         index++;
                     }

@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.LinkedList;
@@ -15,12 +13,11 @@ import java.util.LinkedList;
  * Created by julienpons on 03/02/2017.
  */
 
-public class GridView extends View implements View.OnTouchListener{
+public class GridView extends View{
 
     LinkedList<Case> cases;
     LinkedList<MouvCase> clickCases;
     SudokuGrid sudokuGrid;
-    String playerGrid;
     int rectCote;
     boolean firstDraw;
 
@@ -28,18 +25,21 @@ public class GridView extends View implements View.OnTouchListener{
         super(context,attrs);
         cases = new LinkedList<Case>();
         clickCases = new LinkedList<MouvCase>();
-        this.setOnTouchListener(this);
         firstDraw = true;
     }
 
     public int getCurrentDone(){
         int nbNumberIn = 0;
+        int nbEmptyCase = 0;
         for (Case caseGrid : cases){
-            if (caseGrid.isCanReceiveNumber()&&caseGrid.getNumCase()>0){
-                nbNumberIn++;
+            if (caseGrid.isCanReceiveNumber()){
+                nbEmptyCase++;
+                if(caseGrid.getNumCase()>0) {
+                    nbNumberIn++;
+                }
             }
         }
-        nbNumberIn = nbNumberIn*(100/81);
+        nbNumberIn = (nbNumberIn/nbEmptyCase)*100;
         return nbNumberIn;
     }
 
@@ -60,7 +60,6 @@ public class GridView extends View implements View.OnTouchListener{
     @Override
     public void onDraw(Canvas canvas){
 
-        //for(int i=0;i<){
         rectCote = this.getWidth()/9;
 
         Paint paint = new Paint();
@@ -120,14 +119,6 @@ public class GridView extends View implements View.OnTouchListener{
 
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        int x = (int)event.getX();
-        int y = (int)event.getY();
-
-        return true;
-    }
-
     public Case getOneCase(int id){
         return cases.get(id);
     }
@@ -138,14 +129,6 @@ public class GridView extends View implements View.OnTouchListener{
 
     public void setSudokuGrid(SudokuGrid sudokuGrid){
         this.sudokuGrid = sudokuGrid;
-    }
-
-    public void setPlayerGrid(String infoGrid){
-        this.playerGrid = infoGrid;
-    }
-
-    public int getRectCote(){
-        return this.rectCote;
     }
 
     public int getCurrentInt(String string, int i, int j){

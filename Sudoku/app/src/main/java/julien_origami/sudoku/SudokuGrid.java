@@ -1,7 +1,5 @@
 package julien_origami.sudoku;
 
-import android.util.Log;
-
 /**
  * Created by julienpons on 03/02/2017.
  */

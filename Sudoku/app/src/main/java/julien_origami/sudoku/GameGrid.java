@@ -1,8 +1,8 @@
 package julien_origami.sudoku;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -13,30 +13,50 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
     private int selectedInt;
     private SudokuGrid sudokuGrid;
     private DatabaseSudoku databaseSudoku;
+    private TextView textWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_grid);
 
-        //TextView textchampsaisie = (TextView) findViewById(R.id.textView4);
         Bundle objetbunble = this.getIntent().getExtras();
 
         String idGrid = objetbunble.getBundle("passInfo").getString("itemID");
 
         databaseSudoku = new DatabaseSudoku(this);
         sudokuGrid = databaseSudoku.getGridById(Integer.parseInt(idGrid));
-        //Log.d("player Grid", sudokuGrid.getId()+"");
-        //String infoGrid = objetbunble.getBundle("passInfo").getString("itemGrid");
         gridView = (GridView) findViewById(R.id.dessin);
         gridView.setSudokuGrid(sudokuGrid);
-        //textchampsaisie.setText(infoPasse);
+
+        TextView gridTitle = (TextView) findViewById(R.id.textView4);
+        gridTitle.setText("Niveau "+sudokuGrid.getNum());
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/fontai.ttf");
+        gridTitle.setTypeface(typeface);
+
+        textWin = (TextView) findViewById(R.id.textWin);
+        textWin.setTypeface(typeface);
+        textWin.setText("");
 
         gridView = (GridView) findViewById(R.id.dessin);
         gridView.getCurrentGrid();
         gridView.setOnTouchListener(this);
         selectedInt = 0;
 
+        if(sudokuGrid.getDone()==100){
+            textWin.setText("Niveau Gagné");
+        }
+
+    }
+
+
+    public void levelWin(){
+        textWin.setText("Niveau Gagné");
+        for (Case caseBg : gridView.cases){
+            if (caseBg.getNumCase()==0){
+                textWin.setText("");
+            }
+        }
     }
 
 
@@ -68,23 +88,34 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
                 }
 
                 if(y <= (11*gridView.rectCote) && y >= (10*gridView.rectCote)) {
-                    selectedInt = gridView.clickCases.get(x / gridView.rectCote).getNumCase();
+                    int newSelectedInt = gridView.clickCases.get(x / gridView.rectCote).getNumCase();
+                    if(selectedInt == newSelectedInt){
+                        selectedInt = 0;
+                    }else {
+                        selectedInt = newSelectedInt;
+                    }
                     gridView.modifyBgColorCaseSelected(selectedInt-1);
                 }
                 break;
         }
 
         gridView.invalidate();
-
+        levelWin();
         return true;
     }
 
     public boolean checkIsPossible(int caseSelected, GridView gridView){
+        for (Case caseBg : gridView.cases){
+            caseBg.setDrawBackground(false);
+        }
+
+        boolean res = true;
 
         for(int i = (caseSelected-caseSelected%9);i<(caseSelected-caseSelected%9)+9;i++){
             if(i!=caseSelected && selectedInt > 0) {
                 if (selectedInt == gridView.cases.get(i).getNumCase()){
-                    return false;
+                    gridView.cases.get(i).setDrawBackground(true);
+                    res = false;
                 }
             }
         }
@@ -92,7 +123,8 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
         for(int i = ((caseSelected)%9);i<=((caseSelected)%9)+72;i+=9){
             if(i!=caseSelected && selectedInt > 0) {
                 if (selectedInt == gridView.cases.get(i).getNumCase()){
-                    return false;
+                    gridView.cases.get(i).setDrawBackground(true);
+                    res = false;
                 }
             }
         }
@@ -105,12 +137,13 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
                 int currentInt = i+j;
                 if(currentInt!=caseSelected && selectedInt > 0) {
                     if (selectedInt == gridView.cases.get(currentInt).getNumCase()){
-                        return false;
+                        gridView.cases.get(currentInt).setDrawBackground(true);
+                        res = false;
                     }
                 }
             }
         }
 
-        return true;
+        return res;
     }
 }

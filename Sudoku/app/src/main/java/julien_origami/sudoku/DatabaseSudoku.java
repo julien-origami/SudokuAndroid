@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -19,15 +18,6 @@ public class DatabaseSudoku {
 
     protected SQLiteDatabase mDb = null;
     protected DatabaseHandler mHandler = null;
-
-    /*public static final String TABLE_NAME = "metier";
-    public static final String KEY = "id";
-    public static final String INTITULE = "intitule";
-    public static final String SALAIRE = "salaire";
-
-    public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " + INTITULE + " TEXT, " + SALAIRE + " REAL);";
-
-    public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";*/
 
     public DatabaseSudoku(Context pContext) {
         this.mHandler = new DatabaseHandler(pContext, NOM, null, VERSION);
@@ -83,11 +73,7 @@ public class DatabaseSudoku {
         mDb.insert(mHandler.SUDOKU_TABLE_NAME, null, value);
     }
 
-    /*public void supprimer(long id) {
-        // CODE
-    }
 
-    */
     public void update(SudokuGrid sudokuGrid) {
         ContentValues value = new ContentValues();
         value.put(mHandler.SUDOKUGRID_DONE, sudokuGrid.getDone());
@@ -95,9 +81,5 @@ public class DatabaseSudoku {
         value.put(mHandler.SUDOKUGRID_CHRONO, sudokuGrid.getChrono());
         mDb.update(mHandler.SUDOKU_TABLE_NAME, value, mHandler.SUDOKUGRID_KEY + " = ?", new String[] {String.valueOf(sudokuGrid.getId())});
     }
-
-    /*public Metier selectionner(long id) {
-        // CODE
-    }*/
 
 }

@@ -1,12 +1,10 @@
 package julien_origami.sudoku;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,19 +62,36 @@ public class MonAdapteur extends BaseAdapter {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
 
-        text1.setText(items.get(position).getNum() + "   niveau:" + items.get(position).getLevel());
+        String level;
+
+        switch (items.get(position).getLevel()){
+            case 1:
+                level = "*";
+                break;
+            case 2:
+                level = "**";
+                break;
+            case 3:
+                level = "***";
+                break;
+            default:
+                level = "*";
+                break;
+        }
+
+        text1.setText("Niveau : "+ items.get(position).getNum() + "     Difficulté : " + level);
         text1.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         text1.setTextSize(20);
-        text2.setText(items.get(position).getDone()+" %");
-        text2.setTextSize(22);
-        if (items.get(position).getDone() < 40) {
+        text1.setPadding(0,15,0,0);
+        text2.setText("rempli à "+items.get(position).getDone()+" %");
+        text2.setTextSize(16);
+        text2.setPadding(0,5,0,25);
+        if (items.get(position).getDone() < 70) {
             text2.setTextColor(Color.RED);
         }
-        else
+        else {
             text2.setTextColor(Color.GREEN);
-
-        //Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Munro.ttf");
-        //text2.setTypeface(typeface);
+        }
 
         twoLineListItem.setOnClickListener(new Button.OnClickListener() {
             @Override

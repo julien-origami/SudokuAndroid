@@ -1,9 +1,8 @@
 package julien_origami.sudoku;
 
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +19,9 @@ public class LevelChoice extends AppCompatActivity {
         setContentView(R.layout.activity_level_choice);
 
         textchampsaisie = (TextView) findViewById(R.id.textView3);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/fontai.ttf");
+        textchampsaisie.setTypeface(typeface);
+
         objetbunble = this.getIntent().getExtras();
 
         infoPasse = objetbunble.getBundle("passInfo").getString("firstString");
