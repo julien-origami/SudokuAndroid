@@ -9,19 +9,29 @@ import android.widget.TextView;
 
 public class LevelChoice extends AppCompatActivity {
 
+    TextView textchampsaisie;
+    Bundle objetbunble;
+    BddManager bddManager;
+    String infoPasse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_choice);
 
-        TextView textchampsaisie = (TextView) findViewById(R.id.textView3);
-        Bundle objetbunble = this.getIntent().getExtras();
+        textchampsaisie = (TextView) findViewById(R.id.textView3);
+        objetbunble = this.getIntent().getExtras();
 
-        String infoPasse = objetbunble.getBundle("passInfo").getString("firstString");
+        infoPasse = objetbunble.getBundle("passInfo").getString("firstString");
         textchampsaisie.setText(infoPasse);
 
-        BddManager bddManager = new BddManager(this);
+        bddManager = new BddManager(this);
+    }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
         ListView levelList = (ListView) findViewById(R.id.levelList);
         levelList.setAdapter(bddManager.getCorrectObject(infoPasse));
     }

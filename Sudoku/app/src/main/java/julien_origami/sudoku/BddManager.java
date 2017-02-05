@@ -104,6 +104,7 @@ public class BddManager{
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String str = new String();
             String buf = str;
+            String playerGrid = "000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
             //ArrayList<SudokuGrid> categories = new ArrayList();
             if (is != null) {
@@ -115,7 +116,9 @@ public class BddManager{
                                 Log.d("show index Number", index+"");
                                 //counter.setText((x-1 * 1000 + index)+"");
                             }
-                            databaseSudoku.ajouter(new SudokuGrid((x * 9 + index)/*ID PROVISOIRE*/, x, index, 0, str));
+                            SudokuGrid sudokuGrid = new SudokuGrid((x * 9 + index), x, index, 0, str);
+                            sudokuGrid.setPlayerGrid(playerGrid);
+                            databaseSudoku.ajouter(sudokuGrid);
                             //categories.add(new SudokuGrid((x * 9 + index)/*ID PROVISOIRE*/, x, index, 30, str));
                         }
                         index++;

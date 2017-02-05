@@ -11,29 +11,41 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
 
     private GridView gridView;
     private int selectedInt;
+    private SudokuGrid sudokuGrid;
+    private DatabaseSudoku databaseSudoku;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_grid);
 
-        TextView textchampsaisie = (TextView) findViewById(R.id.textView4);
+        //TextView textchampsaisie = (TextView) findViewById(R.id.textView4);
         Bundle objetbunble = this.getIntent().getExtras();
 
         String idGrid = objetbunble.getBundle("passInfo").getString("itemID");
 
-        DatabaseSudoku databaseSudoku = new DatabaseSudoku(this);
-        SudokuGrid sudokuGrid = databaseSudoku.getGridById(Integer.parseInt(idGrid));
-
+        databaseSudoku = new DatabaseSudoku(this);
+        sudokuGrid = databaseSudoku.getGridById(Integer.parseInt(idGrid));
+        //Log.d("player Grid", sudokuGrid.getId()+"");
         //String infoGrid = objetbunble.getBundle("passInfo").getString("itemGrid");
-        GridView gridView = (GridView) findViewById(R.id.dessin);
-        gridView.setInfoGrid(sudokuGrid.getGrid());
+        gridView = (GridView) findViewById(R.id.dessin);
+        gridView.setSudokuGrid(sudokuGrid);
         //textchampsaisie.setText(infoPasse);
 
         gridView = (GridView) findViewById(R.id.dessin);
+        gridView.getCurrentGrid();
         gridView.setOnTouchListener(this);
         selectedInt = 0;
 
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        sudokuGrid.setPlayerGrid(gridView.getCurrentGrid());
+        sudokuGrid.setDone(gridView.getCurrentDone());
+        databaseSudoku.update(sudokuGrid);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package julien_origami.sudoku;
 
+import android.util.Log;
+
 /**
  * Created by julienpons on 03/02/2017.
  */
@@ -24,6 +26,10 @@ public class SudokuGrid {
 
     public int getDone(){
         return done;
+    }
+
+    public void setDone(int done){
+        this.done = done;
     }
 
     public int getNum(){
@@ -52,5 +58,9 @@ public class SudokuGrid {
 
     public String toString(){
         return "Grid n°"+num+" level "+level+" \n "+done+"%";
+    }
+
+    public void setPlayerGrid(String newGrid){
+        playerGrid = newGrid;
     }
 }

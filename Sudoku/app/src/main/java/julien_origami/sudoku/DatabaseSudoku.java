@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class DatabaseSudoku {
 
-    protected final static int VERSION = 10;
+    protected final static int VERSION = 11;
     protected final static String NOM = "sudokuDatabase.db";
 
     protected SQLiteDatabase mDb = null;
@@ -65,6 +65,7 @@ public class DatabaseSudoku {
         if (cursor!=null) {
             cursor.moveToFirst();
             sudokuGrid = new SudokuGrid(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4));
+            sudokuGrid.setPlayerGrid(cursor.getString(5));
         }
         cursor.close();
         return sudokuGrid;
@@ -87,7 +88,7 @@ public class DatabaseSudoku {
     }
 
     */
-    public void modifier(SudokuGrid sudokuGrid) {
+    public void update(SudokuGrid sudokuGrid) {
         ContentValues value = new ContentValues();
         value.put(mHandler.SUDOKUGRID_DONE, sudokuGrid.getDone());
         value.put(mHandler.SUDOKUGRID_PLAYERGRID, sudokuGrid.getPlayerGrid());

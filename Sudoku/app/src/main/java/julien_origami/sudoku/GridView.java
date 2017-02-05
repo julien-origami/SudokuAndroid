@@ -19,7 +19,8 @@ public class GridView extends View implements View.OnTouchListener{
 
     LinkedList<Case> cases;
     LinkedList<MouvCase> clickCases;
-    String infoGrid;
+    SudokuGrid sudokuGrid;
+    String playerGrid;
     int rectCote;
     boolean firstDraw;
 
@@ -30,6 +31,31 @@ public class GridView extends View implements View.OnTouchListener{
         this.setOnTouchListener(this);
         firstDraw = true;
     }
+
+    public int getCurrentDone(){
+        int nbNumberIn = 0;
+        for (Case caseGrid : cases){
+            if (caseGrid.isCanReceiveNumber()&&caseGrid.getNumCase()>0){
+                nbNumberIn++;
+            }
+        }
+        nbNumberIn = nbNumberIn*(100/81);
+        return nbNumberIn;
+    }
+
+
+    public String getCurrentGrid(){
+        String res = new String();
+        for (Case caseGrid : cases){
+            if (caseGrid.isCanReceiveNumber()){
+                res += caseGrid.getNumCase();
+            }else {
+                res +="0";
+            }
+        }
+        return res;
+    }
+
 
     @Override
     public void onDraw(Canvas canvas){
@@ -53,7 +79,7 @@ public class GridView extends View implements View.OnTouchListener{
 
             for(int i=0;i<9;i++){
                 for(int j=0;j<9;j++) {
-                    Case newCase = new Case(posX, posY, rectCote, getCurrentInt(infoGrid, i, j));
+                    Case newCase = new Case(posX, posY, rectCote, getCurrentInt(sudokuGrid.getGrid(), i, j));
                     cases.add(newCase);
                     newCase.draw(canvas);
                     posX+=rectCote;
@@ -66,6 +92,18 @@ public class GridView extends View implements View.OnTouchListener{
                 newCase.draw(canvas);
                 clickCases.add(newCase);
                 posX+=rectCote;
+            }
+
+            int nbNumberIn = 0;
+            for (Case caseGrid : cases){
+                if(sudokuGrid.getPlayerGrid()!=null) {
+                    if (caseGrid.isCanReceiveNumber() && sudokuGrid.getGrid().length() == sudokuGrid.getPlayerGrid().length()) {
+                        Case newCase = getOneCase(nbNumberIn);
+                        newCase.setNumCase(getCurrentInt(sudokuGrid.getPlayerGrid(), nbNumberIn));
+                        newCase.draw(canvas);
+                    }
+                }
+                nbNumberIn++;
             }
         }else{
             for(int i=0;i<9;i++){
@@ -98,8 +136,12 @@ public class GridView extends View implements View.OnTouchListener{
         return clickCases.get(id);
     }
 
-    public void setInfoGrid(String infoGrid){
-        this.infoGrid = infoGrid;
+    public void setSudokuGrid(SudokuGrid sudokuGrid){
+        this.sudokuGrid = sudokuGrid;
+    }
+
+    public void setPlayerGrid(String infoGrid){
+        this.playerGrid = infoGrid;
     }
 
     public int getRectCote(){
@@ -108,6 +150,10 @@ public class GridView extends View implements View.OnTouchListener{
 
     public int getCurrentInt(String string, int i, int j){
         return Character.digit(string.charAt(9*i+j), 10);
+    }
+
+    public int getCurrentInt(String string, int i){
+        return Character.digit(string.charAt(i), 10);
     }
 
     public void modifyBgColorCaseSelected(int selectedMouvCase){
