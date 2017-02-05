@@ -71,7 +71,6 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
 
         for(int i = (caseSelected-caseSelected%9);i<(caseSelected-caseSelected%9)+9;i++){
             if(i!=caseSelected && selectedInt > 0) {
-                Log.d("Case selected", i+"");
                 if (selectedInt == gridView.cases.get(i).getNumCase()){
                     return false;
                 }
@@ -81,19 +80,21 @@ public class GameGrid extends AppCompatActivity implements View.OnTouchListener{
         for(int i = ((caseSelected)%9);i<=((caseSelected)%9)+72;i+=9){
             if(i!=caseSelected && selectedInt > 0) {
                 if (selectedInt == gridView.cases.get(i).getNumCase()){
-                    Log.d("false", i+"");
                     return false;
                 }
             }
         }
 
-        //(caseSelected-(caseSelected)%9)/9
+        int rowPos = (int) Math.floor(((caseSelected-(caseSelected%9))/9)/3);
+        int colPos = (int) Math.floor(((caseSelected%9)/3));
 
-        for(int i = ((caseSelected)%9);i<=((caseSelected)%9)+72;i+=9){
-            if(i!=caseSelected && selectedInt > 0) {
-                if (selectedInt == gridView.cases.get(i).getNumCase()){
-                    Log.d("false", i+"");
-                    return false;
+        for(int i = (3*colPos+9*3*rowPos);i<(3*colPos+9*3*(rowPos+1));i+=9){
+            for (int j=0;j<3;j++){
+                int currentInt = i+j;
+                if(currentInt!=caseSelected && selectedInt > 0) {
+                    if (selectedInt == gridView.cases.get(currentInt).getNumCase()){
+                        return false;
+                    }
                 }
             }
         }
