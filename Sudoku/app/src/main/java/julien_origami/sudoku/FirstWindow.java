@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.logging.Level;
 public class FirstWindow extends AppCompatActivity implements View.OnClickListener{
 
     Spinner levelChoice;
+    Button validateBtn;
+    Button loadDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,10 @@ public class FirstWindow extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_first_window);
 
         levelChoice = (Spinner) findViewById(R.id.spinner);
-        Button validateBtn = (Button) findViewById(R.id.levelChoice);
+        validateBtn = (Button) findViewById(R.id.levelChoice);
         validateBtn.setOnClickListener(this);
+        loadDatabase = (Button) findViewById(R.id.loadDatabase);
+        loadDatabase.setOnClickListener(this);
 
         List<String> categories = new ArrayList<String>();
         categories.add("Niveau Facile");
@@ -47,10 +52,15 @@ public class FirstWindow extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        Bundle bun = new Bundle();
-        bun.putString("firstString",levelChoice.getSelectedItem().toString());
-        Intent defineIntent = new Intent(this, LevelChoice.class);
-        defineIntent.putExtra("passInfo", bun);
-        this.startActivity(defineIntent);
+        if (v.equals(validateBtn)){
+            Bundle bun = new Bundle();
+            bun.putString("firstString",levelChoice.getSelectedItem().toString());
+            Intent defineIntent = new Intent(this, LevelChoice.class);
+            defineIntent.putExtra("passInfo", bun);
+            this.startActivity(defineIntent);
+        }
+        else if(v.equals(loadDatabase)){
+            new BddManager(this).constructDatabase();
+        }
     }
 }

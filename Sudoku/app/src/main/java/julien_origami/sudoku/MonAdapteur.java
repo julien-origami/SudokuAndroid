@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class MonAdapteur extends BaseAdapter {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
 
-        text1.setText(items.get(position).getNum() + "   niveau:" + (double) items.get(position).getLevel());
+        text1.setText(items.get(position).getNum() + "   niveau:" + items.get(position).getLevel());
         text1.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         text1.setTextSize(20);
         text2.setText(items.get(position).getDone()+" %");
@@ -81,6 +82,7 @@ public class MonAdapteur extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Bundle bun = new Bundle();
+                bun.putString("itemID",items.get(position).getId()+"");
                 bun.putString("itemGrid",items.get(position).getGrid());
                 bun.putString("itemLevel",items.get(position).getLevel()+"");
                 bun.putString("itemNum",items.get(position).getNum()+"");
