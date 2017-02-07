@@ -56,6 +56,7 @@ public class DatabaseSudoku {
             cursor.moveToFirst();
             sudokuGrid = new SudokuGrid(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4));
             sudokuGrid.setPlayerGrid(cursor.getString(5));
+            sudokuGrid.setChrono(cursor.getInt(6));
         }
         cursor.close();
         return sudokuGrid;

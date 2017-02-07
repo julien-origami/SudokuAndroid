@@ -50,6 +50,10 @@ public class SudokuGrid {
         return chrono;
     }
 
+    public void setChrono(int chrono){
+        this.chrono = chrono;
+    }
+
     public int getId(){
         return id;
     }

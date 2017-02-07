@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.LinkedList;
@@ -29,8 +30,8 @@ public class GridView extends View{
     }
 
     public int getCurrentDone(){
-        int nbNumberIn = 0;
-        int nbEmptyCase = 0;
+        long nbNumberIn = 0;
+        long nbEmptyCase = 0;
         for (Case caseGrid : cases){
             if (caseGrid.isCanReceiveNumber()){
                 nbEmptyCase++;
@@ -39,8 +40,8 @@ public class GridView extends View{
                 }
             }
         }
-        nbNumberIn = (nbNumberIn/nbEmptyCase)*100;
-        return nbNumberIn;
+        nbNumberIn = (nbNumberIn*100/nbEmptyCase);
+        return (int) nbNumberIn;
     }
 
 
