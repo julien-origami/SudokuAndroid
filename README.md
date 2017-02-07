@@ -15,6 +15,5 @@ Ce Sudoku est composé de trois activités :
 * Gestion des événements utilisateurs
 
 ###Améliorations Possibles
-* Chronométrer le temps du joueur pour qu’il réalise une grille.
 * Retravailler l’interaction lors du jeu afin de le rendre plus intuitif.
 * Synchronisation automatique de la base de donnée lors de l’installation de l’application.
